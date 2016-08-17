@@ -1,9 +1,17 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class GameSession : Singleton<GameSession>
 {
+	public GameObject visitorPrefab;
+
 	private float time;
 	private float currentTimer;
+
+	private void Start()
+	{
+		if(visitorPrefab == null) throw new NullReferenceException();
+	}
 
 	private void Update()
 	{
@@ -12,7 +20,8 @@ public class GameSession : Singleton<GameSession>
 
 		if (currentTimer >= 5.0f)
 		{
-			Debug.Log("Spawn visitor");
+			var go = Instantiate(visitorPrefab);
+			Debug.Log(go.name);
 			currentTimer = 0.0f;
 		}
 	}

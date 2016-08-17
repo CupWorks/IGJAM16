@@ -26,8 +26,13 @@ public class VisitorController : MonoBehaviour
 			var velocity = (moveTo - transform.position).normalized * movmentSpeed;
 			spriteRigidbody.velocity = velocity;
 		}
-		else 
-		{
+		else {
+			if (alpha == 1.0f) {
+				spriteRigidbody.velocity = Vector3.zero;
+				GetComponent<Collider2D> ().enabled = false;
+			}
+
+
 			alpha = 1.0f - gonesFadeoutTime / fadeOutTime;
 			gonesFadeoutTime += Time.deltaTime;
 
@@ -35,6 +40,7 @@ public class VisitorController : MonoBehaviour
 			{
 				Destroy(gameObject);
 			}
+
 			if (alpha < 0.5f)
 			{
 				GetComponent<Rigidbody2D>().Sleep();

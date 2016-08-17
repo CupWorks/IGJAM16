@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityRandom = UnityEngine.Random;
 
 public class GameSession : Singleton<GameSession>
 {
@@ -20,7 +21,8 @@ public class GameSession : Singleton<GameSession>
 
 		if (currentTimer >= 5.0f)
 		{
-			var go = Instantiate(visitorPrefab);
+			var x = UnityRandom.Range(-10.0f, 10.0f);
+			var go = Instantiate(visitorPrefab, new Vector3(x, -8.0f, 0.0f), new Quaternion());
 			Debug.Log(go.name);
 			currentTimer = 0.0f;
 		}

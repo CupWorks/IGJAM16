@@ -7,5 +7,5 @@ using UnityEngine.SceneManagement;
 public class VisitorDefinition
 {
 	public string name;
-	public VisitorTypes visitorType;
+	public int popularityValue;
 }

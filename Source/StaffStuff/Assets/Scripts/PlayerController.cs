@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
 	private Vector2 velocity = new Vector2(0.0f, 0.0f);
 	private string inputHorizontal;
 	private string inputVertical;
+	private VisitorController followingVisitorController;
 
 	public float movementSpeed = 10.0f;
 	public Players currentPlayer = Players.P1;
@@ -41,5 +42,21 @@ public class PlayerController : MonoBehaviour
 		spriteRigidbody.velocity = velocity;
 		velocity.x = 0.0f;
 		velocity.y = 0.0f;
+
+		if (followingVisitorController != null)
+		{
+			followingVisitorController.moveTo = transform.position;
+		}
+	}
+
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
+		if (collision.gameObject.tag == "Visitor" && followingVisitorController == null)
+		{
+			var visitorController = collision.gameObject.GetComponent<VisitorController>() as VisitorController;
+			visitorController.movementMode = VisitorMovementMode.Follow;
+			visitorController.movmentSpeed *= 2.0f;
+			followingVisitorController = visitorController;
+		}
 	}
 }

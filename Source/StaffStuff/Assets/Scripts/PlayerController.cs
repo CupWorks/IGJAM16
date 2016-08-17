@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
 	private VisitorController followingVisitorController;
 
 	public float movementSpeed = 10.0f;
+	public float visitorSpeedMultiplicator = 1.5f;
 	public Players currentPlayer = Players.P1;
 
 	private void Start()
@@ -55,7 +56,7 @@ public class PlayerController : MonoBehaviour
 		{
 			var visitorController = collision.gameObject.GetComponent<VisitorController>() as VisitorController;
 			visitorController.movementMode = VisitorMovementMode.Follow;
-			visitorController.movmentSpeed *= 2.0f;
+			visitorController.movmentSpeed *= visitorSpeedMultiplicator;
 			followingVisitorController = visitorController;
 		}
 	}

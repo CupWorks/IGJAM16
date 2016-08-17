@@ -15,24 +15,14 @@ public class Singleton<T> : MonoBehaviour where T : Singleton<T>
             }
             return instance;
         }
-
-        private set
-        {
-
-        }
     }
 
-    void Start()
+    private void Start()
     {
         initialized = false;
     }
 
-    void Update()
-    {
-
-    }
-
-    void Awake()
+    private void Awake()
     {
         if(!instance)
         {
@@ -54,7 +44,7 @@ public class Singleton<T> : MonoBehaviour where T : Singleton<T>
         }
     }
 
-    void OnLevelWasLoaded(int level)
+    private void OnLevelWasLoaded(int level)
     {
         Awake();
     }

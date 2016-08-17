@@ -3,15 +3,29 @@ using UnityEngine;
 using UnityRandom = UnityEngine.Random;
 using UnityEngine.SceneManagement;
 
+[Serializable]
+public class VisitorDefinition
+{
+	public string name;
+	public VisitorTypes visitorType;
+}
+
 public class GameSession : Singleton<GameSession>
 {
 	public GameObject visitorPrefab;
 	public uint popularity = 10;
     public uint maxPopularity = 100;
+	public float income = 8.50f;
+	public float totalIncome = 0.0f;
+	public float spawnTime = 1.0f;
+	public float incomeTime = 10.0f;
 
-	public float time;
     public float maxTime = 5f;
-	private float currentTimer;
+	public VisitorDefinition[] visitorDefinitions = new VisitorDefinition[5];
+
+	private float time;
+	private float currentSpawnTimer;
+	private float currentIncomeTimer;
 
 	private void Start()
 	{
@@ -22,12 +36,19 @@ public class GameSession : Singleton<GameSession>
 	private void Update()
 	{
 		time += Time.time;
-		currentTimer += Time.deltaTime;
-		if (currentTimer >= 0.5f)
+		currentSpawnTimer += Time.deltaTime;
+		currentIncomeTimer += Time.deltaTime;
+
+		if (currentSpawnTimer >= spawnTime)
 		{
 			var x = UnityRandom.Range(-10.0f, 10.0f);
 			Instantiate(visitorPrefab, new Vector3(x, -8.0f, 0.0f), new Quaternion());
-			currentTimer = 0.0f;
+			currentSpawnTimer = 0.0f;
+		}
+		if (currentIncomeTimer >= incomeTime)
+		{
+			totalIncome += income;
+			currentIncomeTimer = 0.0f;
 		}
 	}
 

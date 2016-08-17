@@ -44,8 +44,7 @@ public class GameSession : Singleton<GameSession>
 		spawnTime = startSpawnTime * (float)Math.Exp(-decreaseSpawnTime * Math.Pow(time / 60.0f, 2.0f)) + minimalSpawnTime;
 		if (currentSpawnTimer >= spawnTime)
 		{
-			var x = UnityRandom.Range(-10.0f, 10.0f);
-			Instantiate(visitorPrefab, new Vector3(x, -8.0f, 0.0f), new Quaternion());
+			SpawnVisitor();
 			currentSpawnTimer = 0.0f;
 		}
 
@@ -55,6 +54,25 @@ public class GameSession : Singleton<GameSession>
 			totalIncome += income + currentIncomeBonus;
 			currentIncomeTimer = 0.0f;
 		}
+	}
+
+	private void SpawnVisitor()
+	{
+		var spawnRandom = UnityRandom.Range(0, 100);
+		var spawnType = VisitorTypes.Cosplayer;
+		foreach (var visitorDefinition in visitorDefinitions)
+		{
+			if (spawnRandom >= visitorDefinition.minSpawnRange && spawnRandom <= visitorDefinition.maxSpawnRange)
+			{
+				spawnType = visitorDefinition.type;
+				break;
+			}
+		}
+
+		var x = UnityRandom.Range(-10.0f, 10.0f);
+		var go = Instantiate(visitorPrefab, new Vector3(x, -8.0f, 0.0f), new Quaternion()) as GameObject;
+		go.GetComponent<VisitorController>().visitorType = spawnType;
+		go.GetComponent<Renderer>().material.color = visitorDefinitions[(int)spawnType].color;
 	}
 
 	public void DecreasePopularity(VisitorTypes visitorType)

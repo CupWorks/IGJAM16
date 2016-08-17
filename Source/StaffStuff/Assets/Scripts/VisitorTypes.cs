@@ -1,5 +1,6 @@
 public enum VisitorTypes
 {
+	None = -1,
 	Cosplayer = 0,
 	Trade = 1,
 	Press = 2,

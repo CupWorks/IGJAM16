@@ -3,12 +3,6 @@ using UnityEngine;
 using UnityRandom = UnityEngine.Random;
 using UnityEngine.SceneManagement;
 
-[Serializable]
-public class VisitorDefinition
-{
-	public string name;
-	public VisitorTypes visitorType;
-}
 
 public class GameSession : Singleton<GameSession>
 {
@@ -19,11 +13,11 @@ public class GameSession : Singleton<GameSession>
 	public float totalIncome = 0.0f;
 	public float spawnTime = 1.0f;
 	public float incomeTime = 10.0f;
+	public float time = 0.0f;
+	public float maxTime = 300.0f;
 
-    public float maxTime = 5f;
 	public VisitorDefinition[] visitorDefinitions = new VisitorDefinition[5];
 
-	private float time;
 	private float currentSpawnTimer;
 	private float currentIncomeTimer;
 

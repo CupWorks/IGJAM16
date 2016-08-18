@@ -34,6 +34,7 @@ public class HighscoreDisplay : MonoBehaviour
         CreateEntryObjects();
     }
 
+    //Called by BackToMenu-OnHit()
     public void RestartGame()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene("Main");

@@ -11,4 +11,9 @@ public class MainMenu : Singleton<MainMenu>
     {
         this.gameObject.SetActive(true);
     }
+
+    public void ExitGame()
+    {
+        Application.Quit();
+    }
 }

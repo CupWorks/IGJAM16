@@ -50,7 +50,7 @@ public class GameSession : Singleton<GameSession>
 	private void UpdateGameValues()
 	{
 		decreaseSpawnTime = (float)popularity / (float)maxPopularity;
-		spawnTime = startSpawnTime * (float)Math.Exp(-decreaseSpawnTime * Math.Pow(time / 60.0f, 2.0f)) + minimalSpawnTime;
+		spawnTime = startSpawnTime * Mathf.Exp(-decreaseSpawnTime * Mathf.Pow(time / 60.0f, 2.0f)) + minimalSpawnTime;
 
 		currentIncomeBonus = Math.Max(0, popularity / incomePopularityDivider - 2);
 	}

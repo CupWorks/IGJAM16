@@ -1,8 +1,5 @@
 ﻿using UnityEngine;
 
-
-
-
 public class VisitorGateController : MonoBehaviour
 {
     public VisitorTypes[] allowedVisitors;

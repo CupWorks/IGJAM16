@@ -1,7 +1,5 @@
 using System;
 using UnityEngine;
-using UnityRandom = UnityEngine.Random;
-using UnityEngine.SceneManagement;
 
 [Serializable]
 public class VisitorDefinition
@@ -12,4 +10,5 @@ public class VisitorDefinition
 	public int minSpawnRange;
 	public int maxSpawnRange;
 	public Color color;
+	public VisitorSpriteDefinition[] SpriteDefinitions;
 }

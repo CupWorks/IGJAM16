@@ -11,6 +11,12 @@ public class VisitorController : MonoBehaviour
 	public VisitorMovementMode movementMode = VisitorMovementMode.Target;
 	public float fadeOutTime = 3.0f;
 	public bool isDestroyed = false;
+	public Vector3[] pointsInBetween = {
+		new Vector3(-16.0f, 0.0f, 0.0f),
+		new Vector3(-15.0f, -2.0f, 0.0f),
+		new Vector3(16.0f, -2.0f, 0.0f),
+		new Vector3(15.0f, 0.0f, 0.0f)
+	};
 
 	public event VisitorEventHandler Destroyed;
 
@@ -23,13 +29,7 @@ public class VisitorController : MonoBehaviour
 
 	private Vector3 pointInBetween;
 	private Vector3 originalGoal;
-	private Vector3[] pointsInBetween = {
-		new Vector3(-16.0f, 0.0f, 0.0f),
-		new Vector3(-15.0f, -2.0f, 0.0f),
-		new Vector3(16.0f, -2.0f, 0.0f),
-new		Vector3(15.0f, 0.0f, 0.0f)
-	};
-	private bool wasAtPointInBetween; // 
+	private bool wasAtPointInBetween;
 
 	private void Awake()
 	{

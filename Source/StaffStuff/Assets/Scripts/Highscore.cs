@@ -19,7 +19,7 @@ public sealed class Highscore
     public void AddNewHighscoreEntry(string name, float points)
     {
         highscoreEntries.Add(new HighscoreEntry() { entryName = name, totalPoints = points });
-        highscoreEntries.OrderBy(element => element.totalPoints);
+        highscoreEntries = highscoreEntries.OrderByDescending(element => element.totalPoints).ToList();
         SaveHighscoreToXML(this);
     }
 

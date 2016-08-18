@@ -2,12 +2,15 @@
 using UnityEngine;
 using UnityRandom = UnityEngine.Random;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public delegate void GameEndEventHandler();
 
 public class GameSession : Singleton<GameSession>
 {
 	public GameObject visitorPrefab;
+    [HideInInspector]
+    public HighScoreEntryPrompt highscoreEntryPrompt;
 	public int popularity = 10;
     public int maxPopularity = 100;
 	public float income = 8.50f;
@@ -27,6 +30,8 @@ public class GameSession : Singleton<GameSession>
 
     public event GameEndEventHandler OnGameEnd = () => { };
 
+    private const string winMsg = "Your Stall is the most popular of the Convention!";
+    private const string loseMsg = "You're fired!";
 	private bool isRunning = false;
 	private float currentSpawnTimer = 0.0f;
 	private float currentIncomeTimer = 0.0f;
@@ -44,6 +49,7 @@ public class GameSession : Singleton<GameSession>
 		{
 			UpdateGameValues();
 			UpdateTimer();
+            UpdateVictoryConditions();
 		}
 	}
 
@@ -79,15 +85,7 @@ public class GameSession : Singleton<GameSession>
         if (time >= maxTime || popularity <= 0)
         {
             OnGameEnd();
-            if (popularity <= 0)
-            {
-                //activateLoseUI
-            }
-            else
-            {
-                //ActivateWinUI
-            }
-            // Prompt HighscoreEntry UI
+            highscoreEntryPrompt.SetEndgameMessage(popularity <= 0 ? loseMsg : winMsg);
         }
     }
 

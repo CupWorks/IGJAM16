@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityEngine.UI;
 
 public class HighscoreDisplay : MonoBehaviour
@@ -8,18 +7,31 @@ public class HighscoreDisplay : MonoBehaviour
     public GameObject highscoreEntryPrefab;
     public float firstEntryHeight = 420;
 
+    //Called by Inputfield.OnEndEdit from HighscoreEntryPrompt
     public void EnterHighscoreEntry(string entryName)
     {
         highscore = Highscore.GetHighscore();
         highscore.AddNewHighscoreEntry(entryName, GameSession.Instance.totalIncome);
+        CreateEntryObjects();
+    }
 
+    private void CreateEntryObjects()
+    {
         for (int i = 0; i < highscore.highscoreEntries.Count; i++)
         {
             GameObject score = Instantiate(highscoreEntryPrefab);
             score.transform.SetParent(this.transform);
-            score.GetComponent<RectTransform>().localPosition = new Vector3(0, firstEntryHeight + 100 * i, 0);
+            RectTransform rectTrans = score.GetComponent<RectTransform>();
+            rectTrans.localPosition = new Vector3(0, firstEntryHeight - rectTrans.rect.height * i, 0);
+            rectTrans.localScale = Vector3.one;
             SetEntryValues(highscore.highscoreEntries[i], score);
         }
+    }
+
+    public void ShowHighscore()
+    {
+        highscore = Highscore.GetHighscore();
+        CreateEntryObjects();
     }
 
     private void SetEntryValues(HighscoreEntry entry, GameObject score)

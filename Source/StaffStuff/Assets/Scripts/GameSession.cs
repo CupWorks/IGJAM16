@@ -8,6 +8,9 @@ public delegate void GameEndEventHandler();
 
 public class GameSession : Singleton<GameSession>
 {
+	private const string winMsg = "Your Stall is the most popular of the Convention!";
+	private const string loseMsg = "You're fired!";
+
 	public GameObject visitorPrefab;
     [HideInInspector]
     public HighScoreEntryPrompt highscoreEntryPrompt;
@@ -30,8 +33,6 @@ public class GameSession : Singleton<GameSession>
 
     public event GameEndEventHandler OnGameEnd = () => { };
 
-    private const string winMsg = "Your Stall is the most popular of the Convention!";
-    private const string loseMsg = "You're fired!";
 	private bool isRunning = false;
 	private float currentSpawnTimer = 0.0f;
 	private float currentIncomeTimer = 0.0f;
@@ -105,7 +106,14 @@ public class GameSession : Singleton<GameSession>
 		var x = UnityRandom.Range(-10.0f, 10.0f);
 		var go = Instantiate(visitorPrefab, new Vector3(x, -8.0f, 0.0f), new Quaternion()) as GameObject;
 		go.GetComponent<VisitorController>().visitorType = spawnType;
-		go.GetComponent<Renderer>().material.color = visitorDefinitions[(int)spawnType].color;
+		if (spawnType == VisitorTypes.Trade)
+		{
+			go.GetComponent<VisitorController>().SetSpriteDefinition(visitorDefinitions[(int)spawnType].SpriteDefinitions[0]);
+		}
+		else
+		{
+			go.GetComponent<Renderer>().material.color = visitorDefinitions[(int)spawnType].color;
+		}
 	}
 
 	public void DecreasePopularity(VisitorTypes visitorType)

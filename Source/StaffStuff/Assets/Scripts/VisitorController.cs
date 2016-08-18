@@ -17,10 +17,17 @@ public class VisitorController : MonoBehaviour
 	private float alpha = 1.0f;
 
 	private Rigidbody2D spriteRigidbody;
+	private SpriteRenderer spriteRenderer;
+	private VisitorSpriteDefinition spriteDefinition;
+
+	private void Awake()
+	{
+		spriteRigidbody = GetComponent<Rigidbody2D>();
+		spriteRenderer = GetComponent<SpriteRenderer>();
+	}
 
 	private void Start()
 	{
-		spriteRigidbody = GetComponent<Rigidbody2D>();
         GameSession.Instance.OnGameEnd += Destroy;
 	}
 
@@ -30,6 +37,8 @@ public class VisitorController : MonoBehaviour
 		{
 			var velocity = (moveTo - transform.position).normalized * movmentSpeed;
 			spriteRigidbody.velocity = velocity;
+
+			ChangeSpriteForDirection();
 		}
 		else 
 		{
@@ -53,6 +62,29 @@ public class VisitorController : MonoBehaviour
 		}
 	}
 
+	private void ChangeSpriteForDirection()
+	{
+		if (spriteDefinition != null)
+		{
+			if (spriteRigidbody.velocity.y >= 0.0f && spriteRigidbody.velocity.y >= spriteRigidbody.velocity.x)
+			{
+				spriteRenderer.sprite = spriteDefinition.up;
+			}
+			if (spriteRigidbody.velocity.y < 0.0f && spriteRigidbody.velocity.y < spriteRigidbody.velocity.x)
+			{
+				spriteRenderer.sprite = spriteDefinition.down;
+			}
+			if (spriteRigidbody.velocity.x >= 0.0f && spriteRigidbody.velocity.x >= spriteRigidbody.velocity.y)
+			{
+				spriteRenderer.sprite = spriteDefinition.right;
+			}
+			if (spriteRigidbody.velocity.x < 0.0f && spriteRigidbody.velocity.x < spriteRigidbody.velocity.y)
+			{
+				spriteRenderer.sprite = spriteDefinition.left;
+			}
+		}
+	}
+
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
 		if (!isDestroyed && collision.gameObject.tag == "Stage" && movementMode == VisitorMovementMode.Target)
@@ -70,5 +102,11 @@ public class VisitorController : MonoBehaviour
 		{
 			Destroyed.Invoke();
 		}
+	}
+
+	public void SetSpriteDefinition(VisitorSpriteDefinition newSpriteDefinition)
+	{
+		spriteDefinition = newSpriteDefinition;
+		spriteRenderer.sprite = spriteDefinition.up;
 	}
 }

@@ -2,6 +2,7 @@
 <Highscore xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <highscoreEntries>
     <HighscoreEntry>
+<<<<<<< HEAD
       <totalPoints>0</totalPoints>
       <entryName>jhflwk</entryName>
     </HighscoreEntry>
@@ -20,6 +21,10 @@
     <HighscoreEntry>
       <totalPoints>0</totalPoints>
       <entryName>Staff</entryName>
+=======
+      <totalPoints>171.5</totalPoints>
+      <entryName />
+>>>>>>> master
     </HighscoreEntry>
   </highscoreEntries>
 </Highscore>

@@ -26,10 +26,11 @@ public sealed class Highscore
     private static Highscore LoadHighscoreFromXML()
     {
         Highscore score = new Highscore();
-        if (File.Exists("Highscore.xml"))
+        
+        if (File.Exists("Temp/Highscore.xml"))
         {
             XmlSerializer deserializer = new XmlSerializer(typeof(Highscore));
-            TextReader reader = new StreamReader("Highscore.xml");
+            TextReader reader = new StreamReader("Temp/Highscore.xml");
             score = deserializer.Deserialize(reader) as Highscore;
             reader.Close();
         }
@@ -38,8 +39,10 @@ public sealed class Highscore
 
     private static void SaveHighscoreToXML(Highscore highscore)
     {
+        if (!Directory.Exists("Temp"))
+            Directory.CreateDirectory("Temp");
         XmlSerializer serializer = new XmlSerializer(typeof(Highscore));
-        TextWriter writer = new StreamWriter("Highscore.xml");
+        TextWriter writer = new StreamWriter("Temp/Highscore.xml");
         serializer.Serialize(writer, highscore);
         writer.Close();
     }

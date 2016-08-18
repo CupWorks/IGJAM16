@@ -12,6 +12,7 @@ public class GameSession : Singleton<GameSession>
 
 	public GameObject visitorPrefab;
 	public GameObject playerPrefab;
+	public GameObject introprefab;
     [HideInInspector]
     public HighScoreEntryPrompt highscoreEntryPrompt;
 	public int popularity = 10;
@@ -33,7 +34,7 @@ public class GameSession : Singleton<GameSession>
 
     public event GameEndEventHandler OnGameEnd = () => { };
 
-    private GameState currentGameState = GameState.Startmenu;
+	private GameState currentGameState = GameState.Intro;
 	private float currentSpawnTimer = 0.0f;
 	private float currentIncomeTimer = 0.0f;
 
@@ -43,6 +44,9 @@ public class GameSession : Singleton<GameSession>
 		if (playerPrefab == null) throw new NullReferenceException();
 		SceneManager.LoadScene("HUD", LoadSceneMode.Additive);
         OnGameEnd += PauseSession;
+		if (currentGameState == GameState.Intro) {
+			IntroSession ();
+		}
 	}
 
 	private void Update()
@@ -133,13 +137,18 @@ public class GameSession : Singleton<GameSession>
 		popularity += 1;
 	}
 
+	public void IntroSession()
+	{
+		var intro = Instantiate(introprefab) as GameObject;
+	}
+
 	public void StartSession()
 	{
         if (currentGameState == GameState.Startmenu)
         {
-            var p1 = Instantiate(playerPrefab, new Vector3(-8.0f, -2.0f, 0.0f), new Quaternion()) as GameObject;
+			var p1 = Instantiate(playerPrefab, new Vector3(-8.0f, -2.0f, 0.0f), Quaternion.identity) as GameObject;
             p1.GetComponent<PlayerController>().currentPlayer = Players.P1;
-            var p2 = Instantiate(playerPrefab, new Vector3(8.0f, -2.0f, 0.0f), new Quaternion()) as GameObject;
+			var p2 = Instantiate(playerPrefab, new Vector3(8.0f, -2.0f, 0.0f), Quaternion.identity) as GameObject;
             p2.GetComponent<PlayerController>().currentPlayer = Players.P2;
         }
         currentGameState = GameState.Running;

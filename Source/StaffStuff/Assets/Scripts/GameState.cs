@@ -2,6 +2,7 @@
 {
     Running,
     Pausemenu,
-    Startmenu
+    Startmenu,
+	Intro
 }
 

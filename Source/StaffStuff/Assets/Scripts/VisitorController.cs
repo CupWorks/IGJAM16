@@ -57,11 +57,11 @@ public class VisitorController : MonoBehaviour
 		if (!isDestroyed && collision.gameObject.tag == "Stage" && movementMode == VisitorMovementMode.Target)
 		{
 			GameSession.Instance.DecreasePopularity(visitorType);
-			Destory();
+			Destroy();
 		}
 	}
 
-	public void Destory()
+	public void Destroy()
 	{
 		isDestroyed = true;
 		if (Destroyed != null)

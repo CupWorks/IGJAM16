@@ -20,7 +20,7 @@ public class VisitorGateController : MonoBehaviour
             {
                 GameSession.Instance.DecreasePopularity(controller.visitorType);
             }
-			controller.Destory();
+			controller.Destroy();
         }
     }
 

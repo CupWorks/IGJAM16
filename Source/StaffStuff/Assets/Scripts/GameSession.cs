@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityRandom = UnityEngine.Random;
 using UnityEngine.SceneManagement;
 
+public delegate void GameEndEventHandler();
 
 public class GameSession : Singleton<GameSession>
 {
@@ -24,6 +25,8 @@ public class GameSession : Singleton<GameSession>
 
 	public VisitorDefinition[] visitorDefinitions = new VisitorDefinition[5];
 
+    public event GameEndEventHandler OnGameEnd = () => { };
+
 	private bool isRunning = false;
 	private float currentSpawnTimer = 0.0f;
 	private float currentIncomeTimer = 0.0f;
@@ -32,6 +35,7 @@ public class GameSession : Singleton<GameSession>
 	{
 		if(visitorPrefab == null) throw new NullReferenceException();
         SceneManager.LoadScene("UI", LoadSceneMode.Additive);
+        OnGameEnd += PauseSession;
 	}
 
 	private void Update()
@@ -69,6 +73,23 @@ public class GameSession : Singleton<GameSession>
 			currentIncomeTimer = 0.0f;
 		}
 	}
+
+    private void UpdateVictoryConditions()
+    {
+        if (time >= maxTime || popularity <= 0)
+        {
+            OnGameEnd();
+            if (popularity <= 0)
+            {
+                //activateLoseUI
+            }
+            else
+            {
+                //ActivateWinUI
+            }
+            // Prompt HighscoreEntry UI
+        }
+    }
 
 	private void SpawnVisitor()
 	{

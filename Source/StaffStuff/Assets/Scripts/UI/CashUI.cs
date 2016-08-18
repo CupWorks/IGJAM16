@@ -5,10 +5,10 @@ public class CashUI : MonoBehaviour
 {
     private Text earnText;
 
-
-	private void Start ()
+    private void Start()
     {
         earnText = GetComponent<Text>();
+        GameSession.Instance.OnGameEnd += () => { this.gameObject.SetActive(false); };
 	}
 	
 	private void Update ()

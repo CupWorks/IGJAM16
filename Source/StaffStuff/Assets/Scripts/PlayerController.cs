@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
 		spriteRigidbody = GetComponent<Rigidbody2D>();
 		inputHorizontal = INPUT_HORIZONTAL + "_" + currentPlayer;
 		inputVertical = INPUT_VERTICAL + "_" + currentPlayer;
+        GameSession.Instance.OnGameEnd += () => { this.gameObject.SetActive(false); };
 	}
 
 	private void FixedUpdate()

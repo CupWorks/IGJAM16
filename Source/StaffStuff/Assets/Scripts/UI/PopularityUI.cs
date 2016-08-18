@@ -12,6 +12,7 @@ public class PopularityUI : MonoBehaviour
         sessionInstance = GameSession.Instance;
         popularityProgressbar = GetComponent<Image>();
         curIncome = GetComponentInChildren<Text>();
+        sessionInstance.OnGameEnd += () => { gameObject.SetActive(false); };
 	}
 	
 	private void Update ()

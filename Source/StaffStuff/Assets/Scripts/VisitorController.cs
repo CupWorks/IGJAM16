@@ -21,6 +21,7 @@ public class VisitorController : MonoBehaviour
 	private void Start()
 	{
 		spriteRigidbody = GetComponent<Rigidbody2D>();
+        GameSession.Instance.OnGameEnd += Destroy;
 	}
 
 	private void Update()
@@ -64,7 +65,8 @@ public class VisitorController : MonoBehaviour
 	public void Destroy()
 	{
 		isDestroyed = true;
-		if (Destroyed != null)
+        GameSession.Instance.OnGameEnd -= Destroy;
+        if (Destroyed != null)
 		{
 			Destroyed.Invoke();
 		}

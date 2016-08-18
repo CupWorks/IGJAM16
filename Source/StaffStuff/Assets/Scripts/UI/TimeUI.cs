@@ -10,6 +10,7 @@ public class TimeUI : MonoBehaviour
     {
         timeOverlay = GetComponent<Image>();
         sessionInstance = GameSession.Instance;
+        sessionInstance.OnGameEnd += () => { this.gameObject.SetActive(false); };
 	}
 	
     private void Update()

@@ -103,4 +103,14 @@ public class GameSession : Singleton<GameSession>
 	{
 		isRunning = true;
 	}
+
+	public void PauseSession()
+	{
+		isRunning = false;
+	}
+
+	public bool IsRunning()
+	{
+		return isRunning;
+	}
 }

@@ -28,6 +28,12 @@ public class PlayerController : MonoBehaviour
 		{
 			GameSession.Instance.StartSession();
 		}
+		if (Input.GetButtonDown("Pause"))
+		{
+			GameSession.Instance.PauseSession();
+		}
+		if (!GameSession.Instance.IsRunning()) return;
+
 		if (Input.GetButton(inputHorizontal) && Input.GetAxisRaw(inputHorizontal) > 0)
 		{
 			velocity.x = 1.0f * movementSpeed;

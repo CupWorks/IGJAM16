@@ -1,5 +1,6 @@
 using UnityEngine;
 
+using UnityRandom = UnityEngine.Random;
 public delegate void VisitorEventHandler();
 
 public class VisitorController : MonoBehaviour
@@ -10,6 +11,12 @@ public class VisitorController : MonoBehaviour
 	public VisitorMovementMode movementMode = VisitorMovementMode.Target;
 	public float fadeOutTime = 3.0f;
 	public bool isDestroyed = false;
+	public Vector3[] pointsInBetween = {
+		new Vector3(-16.0f, 0.0f, 0.0f),
+		new Vector3(-15.0f, -2.0f, 0.0f),
+		new Vector3(16.0f, -2.0f, 0.0f),
+		new Vector3(15.0f, 0.0f, 0.0f)
+	};
 
 	public event VisitorEventHandler Destroyed;
 
@@ -20,16 +27,33 @@ public class VisitorController : MonoBehaviour
 	private SpriteRenderer spriteRenderer;
 	private VisitorSpriteDefinition spriteDefinition;
 
+	private Vector3 pointInBetween;
+	private Vector3 originalGoal;
+	private bool wasAtPointInBetween;
+
 	private void Awake()
 	{
 		spriteRigidbody = GetComponent<Rigidbody2D>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
+		wasAtPointInBetween = false;
+		pointInBetween = pointsInBetween [UnityRandom.Range (0, pointsInBetween.Length)];
+		originalGoal = moveTo;
+		moveTo = pointInBetween;
 	}
 
 	private void Update()
 	{
         if (GameSession.Instance.IsRunning())
         {
+
+			if (!wasAtPointInBetween) {
+				if (Vector2.Distance(GetComponent<Transform>().position, pointInBetween)<=1.5f){
+					wasAtPointInBetween = true;
+					moveTo = originalGoal;
+				}
+			}
+
+
             if (!isDestroyed)
             {
                 var velocity = (moveTo - transform.position).normalized * movmentSpeed;

@@ -96,10 +96,15 @@ public class PlayerController : MonoBehaviour
 		if (collision.gameObject.tag == "Visitor" && followingVisitorController == null)
 		{
 			var visitorController = collision.gameObject.GetComponent<VisitorController>() as VisitorController;
-			visitorController.movementMode = VisitorMovementMode.Follow;
-			visitorController.movmentSpeed *= visitorSpeedMultiplicator;
-			followingVisitorController = visitorController;
-			followingVisitorController.Destroyed += FollowingVisitorDestroyed;
+
+			// else after stealing a visitor, the other player cannot have a followr anymore
+			if (visitorController.isAttachedToPlayer == false) {
+				visitorController.movementMode = VisitorMovementMode.Follow;
+				visitorController.movmentSpeed *= visitorSpeedMultiplicator;
+				followingVisitorController = visitorController;
+				followingVisitorController.Destroyed += FollowingVisitorDestroyed;
+				visitorController.isAttachedToPlayer = true;
+			}
 		}
 	}
 

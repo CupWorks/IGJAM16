@@ -11,6 +11,8 @@ public class VisitorController : MonoBehaviour
 	public VisitorMovementMode movementMode = VisitorMovementMode.Target;
 	public float queueTime = 2.0f;
 	[HideInInspector]
+	public bool isAttachedToPlayer = false;
+	[HideInInspector]
 	public bool shallBeQueued = false;
 	private bool isQueueTimeOver = false;
 	private float goneQueueTime = 0.0f;

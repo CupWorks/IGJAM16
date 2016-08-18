@@ -36,7 +36,7 @@ public class GameSession : Singleton<GameSession>
 
     public event GameEndEventHandler OnGameEnd = () => { };
 
-	private GameState currentGameState = GameState.Intro;
+	public static GameState currentGameState = GameState.Intro;
 	private float currentSpawnTimer = 0.0f;
 	private float currentIncomeTimer = 0.0f;
 

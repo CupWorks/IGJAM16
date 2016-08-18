@@ -37,6 +37,7 @@ public class HighscoreDisplay : MonoBehaviour
     //Called by BackToMenu-OnHit()
     public void RestartGame()
     {
+        GameSession.currentGameState = GameState.Startmenu;
         UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
     }
 

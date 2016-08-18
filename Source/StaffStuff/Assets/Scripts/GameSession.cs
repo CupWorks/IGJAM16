@@ -127,15 +127,9 @@ public class GameSession : Singleton<GameSession>
 			x = Math.Min (16.0f, x);
 		}
 		var go = Instantiate(visitorPrefab, new Vector3(x, y, 10.0f), new Quaternion()) as GameObject;
-		go.GetComponent<VisitorController>().visitorType = spawnType;
-		if (spawnType == VisitorTypes.Trade)
-		{
-			go.GetComponent<VisitorController>().SetSpriteDefinition(visitorDefinitions[(int)spawnType].SpriteDefinitions[0]);
-		}
-		else
-		{
-			go.GetComponent<Renderer>().material.color = visitorDefinitions[(int)spawnType].color;
-		}
+		var goc = go.GetComponent<VisitorController>();
+		goc.visitorType = spawnType;
+		goc.SetSpriteDefinition(visitorDefinitions[(int)spawnType].SpriteDefinitions[0]);
 	}
 
 	public void DecreasePopularity(VisitorTypes visitorType)

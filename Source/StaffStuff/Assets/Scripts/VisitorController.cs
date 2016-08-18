@@ -102,7 +102,7 @@ public class VisitorController : MonoBehaviour
 	{
 		if (spriteDefinition != null)
 		{
-			if (spriteRigidbody.velocity.y >= 0.0f && spriteRigidbody.velocity.y >= spriteRigidbody.velocity.x)
+			if (spriteRigidbody.velocity.y > 0.0f && spriteRigidbody.velocity.y > spriteRigidbody.velocity.x)
 			{
 				spriteRenderer.sprite = spriteDefinition.up;
 			}
@@ -110,7 +110,7 @@ public class VisitorController : MonoBehaviour
 			{
 				spriteRenderer.sprite = spriteDefinition.down;
 			}
-			if (spriteRigidbody.velocity.x >= 0.0f && spriteRigidbody.velocity.x >= spriteRigidbody.velocity.y)
+			if (spriteRigidbody.velocity.x > 0.0f && spriteRigidbody.velocity.x > spriteRigidbody.velocity.y)
 			{
 				spriteRenderer.sprite = spriteDefinition.right;
 			}
@@ -143,6 +143,6 @@ public class VisitorController : MonoBehaviour
 	public void SetSpriteDefinition(VisitorSpriteDefinition newSpriteDefinition)
 	{
 		spriteDefinition = newSpriteDefinition;
-		spriteRenderer.sprite = spriteDefinition.up;
+		spriteRenderer.sprite = spriteDefinition.down;
 	}
 }

@@ -104,8 +104,14 @@ public class GameSession : Singleton<GameSession>
 			}
 		}
 
-		var x = UnityRandom.Range(-10.0f, 10.0f);
-		var go = Instantiate(visitorPrefab, new Vector3(x, -8.0f, 0.0f), new Quaternion()) as GameObject;
+		var x = UnityRandom.Range(-20.0f, 20.0f);
+		var y = -8.0f;
+		if (x < -15.0f || x > 15.0f) {
+			UnityRandom.Range (-8.0f, -3.0f);
+			x = Math.Max (-16.0f, x);
+			x = Math.Min (16.0f, x);
+		}
+		var go = Instantiate(visitorPrefab, new Vector3(x, y, 10.0f), new Quaternion()) as GameObject;
 		go.GetComponent<VisitorController>().visitorType = spawnType;
 		if (spawnType == VisitorTypes.Trade)
 		{

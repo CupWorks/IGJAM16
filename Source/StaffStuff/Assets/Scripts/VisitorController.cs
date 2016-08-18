@@ -1,5 +1,6 @@
 using UnityEngine;
 
+using UnityRandom = UnityEngine.Random;
 public delegate void VisitorEventHandler();
 
 public class VisitorController : MonoBehaviour
@@ -20,10 +21,24 @@ public class VisitorController : MonoBehaviour
 	private SpriteRenderer spriteRenderer;
 	private VisitorSpriteDefinition spriteDefinition;
 
+	private Vector3 pointInBetween;
+	private Vector3 originalGoal;
+	private Vector3[] pointsInBetween = {
+		new Vector3(-16.0f, 0.0f, 0.0f),
+		new Vector3(-15.0f, -2.0f, 0.0f),
+		new Vector3(16.0f, -2.0f, 0.0f),
+new		Vector3(15.0f, 0.0f, 0.0f)
+	};
+	private bool wasAtPointInBetween; // 
+
 	private void Awake()
 	{
 		spriteRigidbody = GetComponent<Rigidbody2D>();
 		spriteRenderer = GetComponent<SpriteRenderer>();
+		wasAtPointInBetween = false;
+		pointInBetween = pointsInBetween [UnityRandom.Range (0, pointsInBetween.Length)];
+		originalGoal = moveTo;
+		moveTo = pointInBetween;
 	}
 
 	private void Start()
@@ -33,13 +48,21 @@ public class VisitorController : MonoBehaviour
 
 	private void Update()
 	{
+		if (!wasAtPointInBetween) {
+			if (Vector2.Distance(GetComponent<Transform>().position, pointInBetween)<=1.5f){
+				wasAtPointInBetween = true;
+				moveTo = originalGoal;
+			}
+		}
+
 		if (!isDestroyed)
 		{
-			var velocity = (moveTo - transform.position).normalized * movmentSpeed;
+			Vector3 velocity;
+				velocity = (moveTo - transform.position).normalized * movmentSpeed;
 			spriteRigidbody.velocity = velocity;
-			transform.Rotate(0.0f, 0.0f, Mathf.Sin(Time.time * 15.0f));
+			transform.Rotate (0.0f, 0.0f, Mathf.Sin (Time.time * 15.0f));
 
-			ChangeSpriteForDirection();
+			ChangeSpriteForDirection ();
 		}
 		else 
 		{

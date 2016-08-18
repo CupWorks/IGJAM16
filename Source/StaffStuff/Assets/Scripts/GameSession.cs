@@ -24,9 +24,9 @@ public class GameSession : Singleton<GameSession>
 
 	public VisitorDefinition[] visitorDefinitions = new VisitorDefinition[5];
 
-
-	private float currentSpawnTimer;
-	private float currentIncomeTimer;
+	private bool isRunning = false;
+	private float currentSpawnTimer = 0.0f;
+	private float currentIncomeTimer = 0.0f;
 
 	private void Start()
 	{
@@ -36,19 +36,33 @@ public class GameSession : Singleton<GameSession>
 
 	private void Update()
 	{
+		if (isRunning)
+		{
+			UpdateGameValues();
+			UpdateTimer();
+		}
+	}
+
+	private void UpdateGameValues()
+	{
+		decreaseSpawnTime = (float)popularity / (float)maxPopularity;
+		spawnTime = startSpawnTime * (float)Math.Exp(-decreaseSpawnTime * Math.Pow(time / 60.0f, 2.0f)) + minimalSpawnTime;
+
+		currentIncomeBonus = Math.Max(0, popularity / incomePopularityDivider - 2);
+	}
+
+	private void UpdateTimer()
+	{
 		time += Time.deltaTime;
 		currentSpawnTimer += Time.deltaTime;
 		currentIncomeTimer += Time.deltaTime;
 
-		decreaseSpawnTime = (float)popularity / (float)maxPopularity;
-		spawnTime = startSpawnTime * (float)Math.Exp(-decreaseSpawnTime * Math.Pow(time / 60.0f, 2.0f)) + minimalSpawnTime;
 		if (currentSpawnTimer >= spawnTime)
 		{
 			SpawnVisitor();
 			currentSpawnTimer = 0.0f;
 		}
 
-		currentIncomeBonus = Math.Max(0, popularity / incomePopularityDivider - 2);
 		if (currentIncomeTimer >= incomeTime)
 		{
 			totalIncome += income + currentIncomeBonus;
@@ -83,5 +97,10 @@ public class GameSession : Singleton<GameSession>
 	public void IncreasePopularity(VisitorTypes visitorType)
 	{
 		popularity += 1;
+	}
+
+	public void StartSession()
+	{
+		isRunning = true;
 	}
 }

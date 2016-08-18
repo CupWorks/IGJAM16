@@ -1,14 +1,17 @@
 ﻿using UnityEngine;
 
-public class VisitorGate : MonoBehaviour
+
+
+
+public class VisitorGateController : MonoBehaviour
 {
     public VisitorTypes[] allowedVisitors;
 
-    private void OnTriggerEnter(Collider other)
+	private void OnTriggerEnter2D(Collider2D other)
     {
-        VisitorController controller = other.GetComponent<VisitorController>();
-        if (controller)
+		if (other.gameObject.tag == "Visitor")
         {
+			var controller = other.gameObject.GetComponent<VisitorController>();
             if (IsCorrectVisitor(controller.visitorType))
             {
                 GameSession.Instance.IncreasePopularity(controller.visitorType);
@@ -17,6 +20,7 @@ public class VisitorGate : MonoBehaviour
             {
                 GameSession.Instance.DecreasePopularity(controller.visitorType);
             }
+			controller.Destory();
         }
     }
 

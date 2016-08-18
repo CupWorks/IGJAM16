@@ -24,6 +24,10 @@ public class PlayerController : MonoBehaviour
 
 	private void FixedUpdate()
 	{
+		if (Input.GetButtonDown("Start"))
+		{
+			GameSession.Instance.StartSession();
+		}
 		if (Input.GetButton(inputHorizontal) && Input.GetAxisRaw(inputHorizontal) > 0)
 		{
 			velocity.x = 1.0f * movementSpeed;
@@ -58,6 +62,12 @@ public class PlayerController : MonoBehaviour
 			visitorController.movementMode = VisitorMovementMode.Follow;
 			visitorController.movmentSpeed *= visitorSpeedMultiplicator;
 			followingVisitorController = visitorController;
+			followingVisitorController.Destroyed += FollowingVisitorDestroyed;
 		}
+	}
+
+	private void FollowingVisitorDestroyed()
+	{
+		followingVisitorController = null;
 	}
 }

@@ -1,5 +1,7 @@
 using UnityEngine;
 
+public delegate void VisitorEventHandler();
+
 public class VisitorController : MonoBehaviour
 {
 	public VisitorTypes visitorType = VisitorTypes.Cosplayer;
@@ -7,8 +9,10 @@ public class VisitorController : MonoBehaviour
 	public Vector3 moveTo = new Vector3(0.0f, 0.0f, 0.0f);
 	public VisitorMovementMode movementMode = VisitorMovementMode.Target;
 	public float fadeOutTime = 3.0f;
+	public bool isDestroyed = false;
 
-	private bool isDestroyed = false;
+	public event VisitorEventHandler Destroyed;
+
 	private float gonesFadeoutTime = 0.0f;
 	private float alpha = 1.0f;
 
@@ -26,12 +30,13 @@ public class VisitorController : MonoBehaviour
 			var velocity = (moveTo - transform.position).normalized * movmentSpeed;
 			spriteRigidbody.velocity = velocity;
 		}
-		else {
-			if (alpha == 1.0f) {
+		else 
+		{
+			if (alpha >= 1.0f)
+			{
 				spriteRigidbody.velocity = Vector3.zero;
-				GetComponent<Collider2D> ().enabled = false;
+				GetComponent<Collider2D>().enabled = false;
 			}
-
 
 			alpha = 1.0f - gonesFadeoutTime / fadeOutTime;
 			gonesFadeoutTime += Time.deltaTime;
@@ -41,10 +46,6 @@ public class VisitorController : MonoBehaviour
 				Destroy(gameObject);
 			}
 
-			if (alpha < 0.5f)
-			{
-				GetComponent<Rigidbody2D>().Sleep();
-			}
 			var oldColor = GetComponent<Renderer>().material.color;
 			oldColor.a = alpha;
 			GetComponent<Renderer>().material.color = oldColor;
@@ -53,10 +54,19 @@ public class VisitorController : MonoBehaviour
 
 	private void OnCollisionEnter2D(Collision2D collision)
 	{
-		if (!isDestroyed && collision.gameObject.tag == "Stage")
+		if (!isDestroyed && collision.gameObject.tag == "Stage" && movementMode == VisitorMovementMode.Target)
 		{
 			GameSession.Instance.DecreasePopularity(visitorType);
-			isDestroyed = true;
+			Destory();
+		}
+	}
+
+	public void Destory()
+	{
+		isDestroyed = true;
+		if (Destroyed != null)
+		{
+			Destroyed.Invoke();
 		}
 	}
 }

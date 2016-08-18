@@ -34,6 +34,11 @@ public class HighscoreDisplay : MonoBehaviour
         CreateEntryObjects();
     }
 
+    public void RestartGame()
+    {
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
+    }
+
     private void SetEntryValues(HighscoreEntry entry, GameObject score)
     {
         score.transform.GetChild(0).GetComponentInChildren<Text>().text = entry.entryName;

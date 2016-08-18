@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityRandom = UnityEngine.Random;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public delegate void GameEndEventHandler();
 

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Highscore xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <highscoreEntries>
+    <HighscoreEntry>
+      <totalPoints>0</totalPoints>
+      <entryName>jhflwk</entryName>
+    </HighscoreEntry>
+    <HighscoreEntry>
+      <totalPoints>0</totalPoints>
+      <entryName>aaayyy</entryName>
+    </HighscoreEntry>
+    <HighscoreEntry>
+      <totalPoints>0</totalPoints>
+      <entryName>aaayyy</entryName>
+    </HighscoreEntry>
+    <HighscoreEntry>
+      <totalPoints>0</totalPoints>
+      <entryName>Staff</entryName>
+    </HighscoreEntry>
+    <HighscoreEntry>
+      <totalPoints>0</totalPoints>
+      <entryName>Staff</entryName>
+    </HighscoreEntry>
+  </highscoreEntries>
+</Highscore>

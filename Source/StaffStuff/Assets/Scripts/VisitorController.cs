@@ -41,49 +41,48 @@ new		Vector3(15.0f, 0.0f, 0.0f)
 		moveTo = pointInBetween;
 	}
 
-	private void Start()
-	{
-        GameSession.Instance.OnGameEnd += Destroy;
-	}
-
 	private void Update()
 	{
-		if (!wasAtPointInBetween) {
-			if (Vector2.Distance(GetComponent<Transform>().position, pointInBetween)<=1.5f){
-				wasAtPointInBetween = true;
-				moveTo = originalGoal;
-			}
-		}
+        if (GameSession.Instance.IsRunning())
+        {
 
-		if (!isDestroyed)
-		{
-			Vector3 velocity;
-				velocity = (moveTo - transform.position).normalized * movmentSpeed;
-			spriteRigidbody.velocity = velocity;
-			transform.Rotate (0.0f, 0.0f, Mathf.Sin (Time.time * 15.0f));
-
-			ChangeSpriteForDirection ();
-		}
-		else 
-		{
-			if (alpha >= 1.0f)
-			{
-				spriteRigidbody.velocity = Vector3.zero;
-				GetComponent<Collider2D>().enabled = false;
+			if (!wasAtPointInBetween) {
+				if (Vector2.Distance(GetComponent<Transform>().position, pointInBetween)<=1.5f){
+					wasAtPointInBetween = true;
+					moveTo = originalGoal;
+				}
 			}
 
-			alpha = 1.0f - gonesFadeoutTime / fadeOutTime;
-			gonesFadeoutTime += Time.deltaTime;
 
-			if (alpha < 0.2f) 
-			{
-				Destroy(gameObject);
-			}
+            if (!isDestroyed)
+            {
+                var velocity = (moveTo - transform.position).normalized * movmentSpeed;
+                spriteRigidbody.velocity = velocity;
+                transform.Rotate(0.0f, 0.0f, Mathf.Sin(Time.time * 15.0f));
 
-			var oldColor = GetComponent<Renderer>().material.color;
-			oldColor.a = alpha;
-			GetComponent<Renderer>().material.color = oldColor;
-		}
+                ChangeSpriteForDirection();
+            }
+            else
+            {
+                if (alpha >= 1.0f)
+                {
+                    spriteRigidbody.velocity = Vector3.zero;
+                    GetComponent<Collider2D>().enabled = false;
+                }
+
+                alpha = 1.0f - gonesFadeoutTime / fadeOutTime;
+                gonesFadeoutTime += Time.deltaTime;
+
+                if (alpha < 0.2f)
+                {
+                    Destroy(gameObject);
+                }
+
+                var oldColor = GetComponent<Renderer>().material.color;
+                oldColor.a = alpha;
+                GetComponent<Renderer>().material.color = oldColor;
+            }
+        }
 	}
 
 	private void ChangeSpriteForDirection()

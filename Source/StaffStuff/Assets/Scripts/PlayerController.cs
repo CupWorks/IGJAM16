@@ -50,10 +50,7 @@ public class PlayerController : MonoBehaviour
 		{
 			velocity.y = -1.0f * movementSpeed;
 		}
-		if (velocity.x > 0.0f || velocity.y > 0.0f)
-		{
-			transform.Rotate(0.0f, 0.0f, Mathf.Sin(Time.time * 15.0f));
-		}
+		transform.Rotate(0.0f, 0.0f, Mathf.Sin(Time.time * 15.0f));
 		spriteRigidbody.velocity = velocity;
 		ChangeSpriteForDirection();
 		velocity.x = 0.0f;

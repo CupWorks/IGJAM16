@@ -12,7 +12,7 @@ public class GameSession : Singleton<GameSession>
 
 	public GameObject visitorPrefab;
 	public GameObject playerPrefab;
-	public GameObject introprefab;
+	public GameObject introPrefab;
     [HideInInspector]
     public HighScoreEntryPrompt highscoreEntryPrompt;
 	public int popularity = 10;
@@ -47,7 +47,7 @@ public class GameSession : Singleton<GameSession>
 		SceneManager.LoadScene("HUD", LoadSceneMode.Additive);
         OnGameEnd += PauseSession;
 		if (currentGameState == GameState.Intro) {
-			IntroSession ();
+			ShowInto ();
 		}
 	}
 
@@ -138,17 +138,17 @@ public class GameSession : Singleton<GameSession>
 
 	public void DecreasePopularity(VisitorTypes visitorType)
 	{
-		popularity -= visitorDefinitions[(int)visitorType].popularityValue;;
+		popularity -= visitorDefinitions[(int)visitorType].popularityValue;
 	}
 
 	public void IncreasePopularity(VisitorTypes visitorType)
 	{
-		popularity += 1;
+		popularity += visitorDefinitions[(int)visitorType].popularityValue;
 	}
 
-	public void IntroSession()
+	public void ShowInto()
 	{
-		var intro = Instantiate(introprefab) as GameObject;
+		Instantiate(introPrefab);
 	}
 
 	public void StartSession()

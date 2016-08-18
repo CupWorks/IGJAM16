@@ -39,7 +39,7 @@ public class GameSession : Singleton<GameSession>
 	private void Start()
 	{
 		if(visitorPrefab == null) throw new NullReferenceException();
-        SceneManager.LoadScene("UI", LoadSceneMode.Additive);
+        SceneManager.LoadScene("HUD", LoadSceneMode.Additive);
         OnGameEnd += PauseSession;
 	}
 

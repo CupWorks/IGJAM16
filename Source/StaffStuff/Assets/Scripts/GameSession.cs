@@ -30,6 +30,8 @@ public class GameSession : Singleton<GameSession>
 	public float decreaseSpawnTime = -0.25f;
 
 	public VisitorDefinition[] visitorDefinitions = new VisitorDefinition[5];
+	public VisitorSpriteDefinition playerOneSprites;
+	public VisitorSpriteDefinition playerTwoSprites;
 
     public event GameEndEventHandler OnGameEnd = () => { };
 
@@ -151,9 +153,13 @@ public class GameSession : Singleton<GameSession>
         if (currentGameState == GameState.Startmenu)
         {
             var p1 = Instantiate(playerPrefab, new Vector3(-8.0f, -2.0f, 0.0f), new Quaternion()) as GameObject;
-            p1.GetComponent<PlayerController>().currentPlayer = Players.P1;
+			var p1c = p1.GetComponent<PlayerController>();
+            p1c.currentPlayer = Players.P1;
+			p1c.SetSpriteDefinition(playerOneSprites);
             var p2 = Instantiate(playerPrefab, new Vector3(8.0f, -2.0f, 0.0f), new Quaternion()) as GameObject;
-            p2.GetComponent<PlayerController>().currentPlayer = Players.P2;
+			var p2c = p2.GetComponent<PlayerController>();
+			p2c.currentPlayer = Players.P2;
+			p2c.SetSpriteDefinition(playerTwoSprites);
         }
         currentGameState = GameState.Running;
         Time.timeScale = 1;

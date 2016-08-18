@@ -55,7 +55,20 @@ public class GameSession : Singleton<GameSession>
 			UpdateTimer();
             UpdateVictoryConditions();
 		}
-	}
+
+        if (Input.GetButtonDown("Pause"))
+        {
+            if (IsRunning())
+            {
+                PauseSession();
+                MainMenu.Instance.ShowPauseMenu();
+            }
+            else
+            {
+                MainMenu.Instance.UnpauseMenu();
+            }
+        }
+    }
 
 	private void UpdateGameValues()
 	{

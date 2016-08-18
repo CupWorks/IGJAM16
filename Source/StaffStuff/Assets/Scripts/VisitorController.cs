@@ -38,6 +38,9 @@ public class VisitorController : MonoBehaviour
 	private Vector3 originalGoal;
 	private bool wasAtPointInBetween;
 
+	[HideInInspector]
+	public bool isAttachAble = true;
+
 	private void Awake()
 	{
 		spriteRigidbody = GetComponent<Rigidbody2D>();

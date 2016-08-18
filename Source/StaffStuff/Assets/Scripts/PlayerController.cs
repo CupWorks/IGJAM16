@@ -10,7 +10,8 @@ public class PlayerController : MonoBehaviour
 	private Vector2 velocity = new Vector2(0.0f, 0.0f);
 	private string inputHorizontal;
 	private string inputVertical;
-	private VisitorController followingVisitorController;
+	[HideInInspector]
+	public VisitorController followingVisitorController;
 
 	public float movementSpeed = 10.0f;
 	public float visitorSpeedMultiplicator = 1.5f;
@@ -98,7 +99,7 @@ public class PlayerController : MonoBehaviour
 			var visitorController = collision.gameObject.GetComponent<VisitorController>() as VisitorController;
 
 			// else after stealing a visitor, the other player cannot have a followr anymore
-			if (visitorController.isAttachedToPlayer == false) {
+			if (!visitorController.isAttachedToPlayer && visitorController.isAttachAble) {
 				visitorController.movementMode = VisitorMovementMode.Follow;
 				visitorController.movmentSpeed *= visitorSpeedMultiplicator;
 				followingVisitorController = visitorController;

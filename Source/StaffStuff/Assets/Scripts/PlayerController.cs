@@ -25,13 +25,10 @@ public class PlayerController : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		if (Input.GetButtonDown("Start"))
-		{
-			GameSession.Instance.StartSession();
-		}
 		if (Input.GetButtonDown("Pause"))
 		{
 			GameSession.Instance.PauseSession();
+            MainMenu.Instance.ShowPauseMenu();
 		}
 		if (!GameSession.Instance.IsRunning()) return;
 

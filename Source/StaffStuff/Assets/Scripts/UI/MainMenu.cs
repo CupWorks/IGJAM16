@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 
-public class MainMenu : MonoBehaviour
+public class MainMenu : Singleton<MainMenu>
 {
-	private void Start ()
-    {
-	
-	}
-	
 	public void StartGame()
     {
         GameSession.Instance.StartSession();
+    }
+
+    public void ShowPauseMenu()
+    {
+        this.gameObject.SetActive(true);
     }
 }

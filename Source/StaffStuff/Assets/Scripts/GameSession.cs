@@ -33,7 +33,7 @@ public class GameSession : Singleton<GameSession>
 
     public event GameEndEventHandler OnGameEnd = () => { };
 
-	private bool isRunning = false;
+    private GameState currentGameState = GameState.Startmenu;
 	private float currentSpawnTimer = 0.0f;
 	private float currentIncomeTimer = 0.0f;
 
@@ -47,7 +47,7 @@ public class GameSession : Singleton<GameSession>
 
 	private void Update()
 	{
-		if (isRunning)
+		if (IsRunning())
 		{
 			UpdateGameValues();
 			UpdateTimer();
@@ -129,20 +129,25 @@ public class GameSession : Singleton<GameSession>
 
 	public void StartSession()
 	{
-		var p1 = Instantiate(playerPrefab, new Vector3(-8.0f, -2.0f, 0.0f), new Quaternion()) as GameObject;
-		p1.GetComponent<PlayerController>().currentPlayer = Players.P1;
-		var p2 = Instantiate(playerPrefab, new Vector3(8.0f, -2.0f, 0.0f), new Quaternion()) as GameObject;
-		p2.GetComponent<PlayerController>().currentPlayer = Players.P2;
-		isRunning = true;
+        if (currentGameState == GameState.Startmenu)
+        {
+            var p1 = Instantiate(playerPrefab, new Vector3(-8.0f, -2.0f, 0.0f), new Quaternion()) as GameObject;
+            p1.GetComponent<PlayerController>().currentPlayer = Players.P1;
+            var p2 = Instantiate(playerPrefab, new Vector3(8.0f, -2.0f, 0.0f), new Quaternion()) as GameObject;
+            p2.GetComponent<PlayerController>().currentPlayer = Players.P2;
+        }
+        currentGameState = GameState.Running;
+        Time.timeScale = 1;
 	}
 
 	public void PauseSession()
 	{
-		isRunning = false;
+        currentGameState = GameState.Pausemenu;
+        Time.timeScale = 0;
 	}
 
 	public bool IsRunning()
 	{
-		return isRunning;
+        return currentGameState == GameState.Running;
 	}
 }

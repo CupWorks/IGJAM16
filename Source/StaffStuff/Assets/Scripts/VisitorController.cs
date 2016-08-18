@@ -26,41 +26,39 @@ public class VisitorController : MonoBehaviour
 		spriteRenderer = GetComponent<SpriteRenderer>();
 	}
 
-	private void Start()
-	{
-        GameSession.Instance.OnGameEnd += Destroy;
-	}
-
 	private void Update()
 	{
-		if (!isDestroyed)
-		{
-			var velocity = (moveTo - transform.position).normalized * movmentSpeed;
-			spriteRigidbody.velocity = velocity;
-			transform.Rotate(0.0f, 0.0f, Mathf.Sin(Time.time * 15.0f));
+        if (GameSession.Instance.IsRunning())
+        {
+            if (!isDestroyed)
+            {
+                var velocity = (moveTo - transform.position).normalized * movmentSpeed;
+                spriteRigidbody.velocity = velocity;
+                transform.Rotate(0.0f, 0.0f, Mathf.Sin(Time.time * 15.0f));
 
-			ChangeSpriteForDirection();
-		}
-		else 
-		{
-			if (alpha >= 1.0f)
-			{
-				spriteRigidbody.velocity = Vector3.zero;
-				GetComponent<Collider2D>().enabled = false;
-			}
+                ChangeSpriteForDirection();
+            }
+            else
+            {
+                if (alpha >= 1.0f)
+                {
+                    spriteRigidbody.velocity = Vector3.zero;
+                    GetComponent<Collider2D>().enabled = false;
+                }
 
-			alpha = 1.0f - gonesFadeoutTime / fadeOutTime;
-			gonesFadeoutTime += Time.deltaTime;
+                alpha = 1.0f - gonesFadeoutTime / fadeOutTime;
+                gonesFadeoutTime += Time.deltaTime;
 
-			if (alpha < 0.2f) 
-			{
-				Destroy(gameObject);
-			}
+                if (alpha < 0.2f)
+                {
+                    Destroy(gameObject);
+                }
 
-			var oldColor = GetComponent<Renderer>().material.color;
-			oldColor.a = alpha;
-			GetComponent<Renderer>().material.color = oldColor;
-		}
+                var oldColor = GetComponent<Renderer>().material.color;
+                oldColor.a = alpha;
+                GetComponent<Renderer>().material.color = oldColor;
+            }
+        }
 	}
 
 	private void ChangeSpriteForDirection()

@@ -17,6 +17,7 @@ public class VisitorGateController : MonoBehaviour
             {
                 GameSession.Instance.DecreasePopularity(controller.visitorType);
             }
+			controller.shallBeQueued = true;
 			controller.Destroy();
         }
     }

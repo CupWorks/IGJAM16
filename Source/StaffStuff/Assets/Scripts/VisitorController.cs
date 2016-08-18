@@ -9,6 +9,11 @@ public class VisitorController : MonoBehaviour
 	public float movmentSpeed = 5.0f;
 	public Vector3 moveTo = new Vector3(0.0f, 0.0f, 0.0f);
 	public VisitorMovementMode movementMode = VisitorMovementMode.Target;
+	public float queueTime = 2.0f;
+	[HideInInspector]
+	public bool shallBeQueued = false;
+	private bool isQueueTimeOver = false;
+	private float goneQueueTime = 0.0f;
 	public float fadeOutTime = 3.0f;
 	public bool isDestroyed = false;
 	public Vector3[] pointsInBetween = {
@@ -52,16 +57,24 @@ public class VisitorController : MonoBehaviour
 					moveTo = originalGoal;
 				}
 			}
+			if (!isQueueTimeOver) {
+				if (goneQueueTime >= queueTime) {
+					isQueueTimeOver = true;
+				}
+			}
 
 
-            if (!isDestroyed)
-            {
-                var velocity = (moveTo - transform.position).normalized * movmentSpeed;
-                spriteRigidbody.velocity = velocity;
-                transform.Rotate(0.0f, 0.0f, Mathf.Sin(Time.time * 15.0f));
+			if (!isDestroyed) {
+				var velocity = (moveTo - transform.position).normalized * movmentSpeed;
+				spriteRigidbody.velocity = velocity;
+				transform.Rotate (0.0f, 0.0f, Mathf.Sin (Time.time * 15.0f));
 
-                ChangeSpriteForDirection();
-            }
+				ChangeSpriteForDirection ();
+			} else if (shallBeQueued && !isQueueTimeOver) {
+				spriteRigidbody.velocity = Vector3.zero;
+				GetComponent<Collider2D>().enabled = false;
+				goneQueueTime += Time.deltaTime;
+			}
             else
             {
                 if (alpha >= 1.0f)

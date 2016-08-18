@@ -12,6 +12,7 @@ public class GameSession : Singleton<GameSession>
 
 	public GameObject visitorPrefab;
 	public GameObject playerPrefab;
+	public GameObject introPrefab;
     [HideInInspector]
     public HighScoreEntryPrompt highscoreEntryPrompt;
 	public int popularity = 10;
@@ -35,7 +36,7 @@ public class GameSession : Singleton<GameSession>
 
     public event GameEndEventHandler OnGameEnd = () => { };
 
-    private GameState currentGameState = GameState.Startmenu;
+	private GameState currentGameState = GameState.Intro;
 	private float currentSpawnTimer = 0.0f;
 	private float currentIncomeTimer = 0.0f;
 
@@ -45,6 +46,9 @@ public class GameSession : Singleton<GameSession>
 		if (playerPrefab == null) throw new NullReferenceException();
 		SceneManager.LoadScene("HUD", LoadSceneMode.Additive);
         OnGameEnd += PauseSession;
+		if (currentGameState == GameState.Intro) {
+			ShowInto ();
+		}
 	}
 
 	private void Update()
@@ -127,36 +131,35 @@ public class GameSession : Singleton<GameSession>
 			x = Math.Min (16.0f, x);
 		}
 		var go = Instantiate(visitorPrefab, new Vector3(x, y, 10.0f), new Quaternion()) as GameObject;
-		go.GetComponent<VisitorController>().visitorType = spawnType;
-		if (spawnType == VisitorTypes.Trade)
-		{
-			go.GetComponent<VisitorController>().SetSpriteDefinition(visitorDefinitions[(int)spawnType].SpriteDefinitions[0]);
-		}
-		else
-		{
-			go.GetComponent<Renderer>().material.color = visitorDefinitions[(int)spawnType].color;
-		}
+		var goc = go.GetComponent<VisitorController>();
+		goc.visitorType = spawnType;
+		goc.SetSpriteDefinition(visitorDefinitions[(int)spawnType].SpriteDefinitions[0]);
 	}
 
 	public void DecreasePopularity(VisitorTypes visitorType)
 	{
-		popularity -= visitorDefinitions[(int)visitorType].popularityValue;;
+		popularity -= visitorDefinitions[(int)visitorType].popularityValue;
 	}
 
 	public void IncreasePopularity(VisitorTypes visitorType)
 	{
-		popularity += 1;
+		popularity += visitorDefinitions[(int)visitorType].popularityValue;
+	}
+
+	public void ShowInto()
+	{
+		Instantiate(introPrefab);
 	}
 
 	public void StartSession()
 	{
         if (currentGameState == GameState.Startmenu)
         {
-            var p1 = Instantiate(playerPrefab, new Vector3(-8.0f, -2.0f, 0.0f), new Quaternion()) as GameObject;
+			var p1 = Instantiate(playerPrefab, new Vector3(-8.0f, -2.0f, 0.0f), Quaternion.identity) as GameObject;
 			var p1c = p1.GetComponent<PlayerController>();
             p1c.currentPlayer = Players.P1;
 			p1c.SetSpriteDefinition(playerOneSprites);
-            var p2 = Instantiate(playerPrefab, new Vector3(8.0f, -2.0f, 0.0f), new Quaternion()) as GameObject;
+			var p2 = Instantiate(playerPrefab, new Vector3(8.0f, -2.0f, 0.0f), Quaternion.identity) as GameObject;
 			var p2c = p2.GetComponent<PlayerController>();
 			p2c.currentPlayer = Players.P2;
 			p2c.SetSpriteDefinition(playerTwoSprites);

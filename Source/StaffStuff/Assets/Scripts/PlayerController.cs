@@ -50,7 +50,9 @@ public class PlayerController : MonoBehaviour
 		{
 			velocity.y = -1.0f * movementSpeed;
 		}
+		transform.Rotate(0.0f, 0.0f, Mathf.Sin(Time.time * 15.0f));
 		spriteRigidbody.velocity = velocity;
+		ChangeSpriteForDirection();
 		velocity.x = 0.0f;
 		velocity.y = 0.0f;
 
@@ -63,14 +65,14 @@ public class PlayerController : MonoBehaviour
 	public void SetSpriteDefinition(VisitorSpriteDefinition newSpriteDefinition)
 	{
 		spriteDefinition = newSpriteDefinition;
-		spriteRenderer.sprite = spriteDefinition.up;
+		spriteRenderer.sprite = spriteDefinition.down;
 	}
 
 	private void ChangeSpriteForDirection()
 	{
 		if (spriteDefinition != null)
 		{
-			if (spriteRigidbody.velocity.y >= 0.0f && spriteRigidbody.velocity.y >= spriteRigidbody.velocity.x)
+			if (spriteRigidbody.velocity.y > 0.0f && spriteRigidbody.velocity.y > spriteRigidbody.velocity.x)
 			{
 				spriteRenderer.sprite = spriteDefinition.up;
 			}
@@ -78,7 +80,7 @@ public class PlayerController : MonoBehaviour
 			{
 				spriteRenderer.sprite = spriteDefinition.down;
 			}
-			if (spriteRigidbody.velocity.x >= 0.0f && spriteRigidbody.velocity.x >= spriteRigidbody.velocity.y)
+			if (spriteRigidbody.velocity.x > 0.0f && spriteRigidbody.velocity.x > spriteRigidbody.velocity.y)
 			{
 				spriteRenderer.sprite = spriteDefinition.right;
 			}

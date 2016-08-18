@@ -11,6 +11,7 @@ public class GameSession : Singleton<GameSession>
 	private const string loseMsg = "You're fired!";
 
 	public GameObject visitorPrefab;
+	public GameObject playerPrefab;
     [HideInInspector]
     public HighScoreEntryPrompt highscoreEntryPrompt;
 	public int popularity = 10;
@@ -38,8 +39,9 @@ public class GameSession : Singleton<GameSession>
 
 	private void Start()
 	{
-		if(visitorPrefab == null) throw new NullReferenceException();
-        SceneManager.LoadScene("HUD", LoadSceneMode.Additive);
+		if (visitorPrefab == null) throw new NullReferenceException();
+		if (playerPrefab == null) throw new NullReferenceException();
+		SceneManager.LoadScene("HUD", LoadSceneMode.Additive);
         OnGameEnd += PauseSession;
 	}
 
@@ -127,6 +129,10 @@ public class GameSession : Singleton<GameSession>
 
 	public void StartSession()
 	{
+		var p1 = Instantiate(playerPrefab, new Vector3(-8.0f, -2.0f, 0.0f), new Quaternion()) as GameObject;
+		p1.GetComponent<PlayerController>().currentPlayer = Players.P1;
+		var p2 = Instantiate(playerPrefab, new Vector3(8.0f, -2.0f, 0.0f), new Quaternion()) as GameObject;
+		p2.GetComponent<PlayerController>().currentPlayer = Players.P2;
 		isRunning = true;
 	}
 

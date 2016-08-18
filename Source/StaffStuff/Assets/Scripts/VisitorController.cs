@@ -37,6 +37,7 @@ public class VisitorController : MonoBehaviour
 		{
 			var velocity = (moveTo - transform.position).normalized * movmentSpeed;
 			spriteRigidbody.velocity = velocity;
+			transform.Rotate(0.0f, 0.0f, Mathf.Sin(Time.time * 15.0f));
 
 			ChangeSpriteForDirection();
 		}

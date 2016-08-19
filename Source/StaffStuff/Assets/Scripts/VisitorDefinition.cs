@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 
 [Serializable]
 public class VisitorDefinition
@@ -9,6 +8,5 @@ public class VisitorDefinition
 	public int popularityValue;
 	public int minSpawnRange;
 	public int maxSpawnRange;
-	public Color color;
 	public VisitorSpriteDefinition[] SpriteDefinitions;
 }

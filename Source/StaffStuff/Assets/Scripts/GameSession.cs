@@ -13,6 +13,7 @@ public class GameSession : Singleton<GameSession>
 
 	public GameObject visitorPrefab;
 	public GameObject playerPrefab;
+	public GameObject puppetPrefab;
 	public GameObject introPrefab;
     [HideInInspector]
     public HighScoreEntryPrompt highscoreEntryPrompt;
@@ -45,6 +46,8 @@ public class GameSession : Singleton<GameSession>
 	{
 		if (visitorPrefab == null) throw new NullReferenceException();
 		if (playerPrefab == null) throw new NullReferenceException();
+		if (puppetPrefab == null) throw new NullReferenceException();
+		if (introPrefab == null) throw new NullReferenceException();
 		SceneManager.LoadScene("HUD", LoadSceneMode.Additive);
         OnGameEnd += PauseSession;
 		if (currentGameState == GameState.Intro) {
@@ -181,6 +184,19 @@ public class GameSession : Singleton<GameSession>
 	public bool IsRunning()
 	{
         return currentGameState == GameState.Running;
+	}
+
+	private void SpawnCreditPuppets()
+	{
+		const float space = 1.75f;
+		var sprites = GetAllCharacterSprits();
+		var x = ((sprites.Count * space) / -2.0f) + (space / 2);
+		foreach (var sprite in sprites)
+		{
+			var puppet = Instantiate(puppetPrefab, new Vector3(x, -2.0f, 0.0f), Quaternion.identity) as GameObject;
+			puppet.GetComponent<SpriteRenderer>().sprite = sprite;
+			x += space;
+		}
 	}
 
 	private List<Sprite> GetAllCharacterSprits()

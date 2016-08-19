@@ -22,10 +22,9 @@ public class CashUI : MonoBehaviour
         sessionInst.OnGameEnd += () => { this.gameObject.SetActive(false); };
 	}
 	
-	private void Update ()
+	private void Update()
     {
         float fill = sessionInst.totalIncome / maxIncome;
-        Debug.Log(fill);
         incomeProgressBar.fillAmount = fill;
         earnText.text = sessionInst.totalIncome.ToString("0.00") + " €";
         earnText.rectTransform.localPosition = new Vector3(incomePosX, fillBarBase + progressBarHeight * fill);

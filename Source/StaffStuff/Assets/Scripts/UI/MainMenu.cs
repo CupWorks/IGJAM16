@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class MainMenu : Singleton<MainMenu>
 {
     private List<CanvasRenderer> childRenderer = new List<CanvasRenderer>();
+    public GameObject creditScreen;
 
     protected override void Init()
     {
@@ -30,6 +31,20 @@ public class MainMenu : Singleton<MainMenu>
     public void StartGame()
     {
         GameSession.Instance.StartSession();
+    }
+
+    public void ReturnFromCredits()
+    {
+        GameSession.currentGameState = GameState.Startmenu;
+        gameObject.SetActive(true);
+        creditScreen.SetActive(false);
+    }
+
+    public void ShowCredits()
+    {
+        GameSession.currentGameState = GameState.Credits;
+        gameObject.SetActive(false);
+        creditScreen.SetActive(true);
     }
 
     public void ShowPauseMenu()

@@ -3,6 +3,7 @@
     Running,
     Pausemenu,
     Startmenu,
+    Credits,
 	Intro
 }
 

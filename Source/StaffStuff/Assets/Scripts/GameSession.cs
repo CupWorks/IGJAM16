@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityRandom = UnityEngine.Random;
 using UnityEngine.SceneManagement;
@@ -180,5 +181,21 @@ public class GameSession : Singleton<GameSession>
 	public bool IsRunning()
 	{
         return currentGameState == GameState.Running;
+	}
+
+	private List<Sprite> GetAllCharacterSprits()
+	{
+		var list = new List<Sprite>();
+		list.Add(playerOneSprites.down);
+		foreach (var visitorDefinition in visitorDefinitions)
+		{
+			foreach (var sd in visitorDefinition.SpriteDefinitions)
+			{
+				list.Add(sd.down);
+			}
+		}
+		list.Add(playerTwoSprites.down);
+
+		return list;
 	}
 }

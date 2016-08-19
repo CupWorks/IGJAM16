@@ -9,8 +9,8 @@ public delegate void GameEndEventHandler();
 
 public class GameSession : Singleton<GameSession>
 {
-	private const string winMsg = "Your Stall is the most popular of the Convention!";
-	private const string loseMsg = "You're fired!";
+	private const string winMsg = "Your booth is the most popular of the convention!";
+	private const string loseMsg = "You're FIRED!";
 
 	public GameObject visitorPrefab;
 	public GameObject playerPrefab;

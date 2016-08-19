@@ -5,7 +5,7 @@ public class CashUI : MonoBehaviour
 {
     private Text earnText;
     private Image incomeProgressBar;
-    private const float maxIncome = 1000f;
+    private const float maxIncome = 500f;
     private float fillBarBase;
     private float progressBarHeight;
     private float incomePosX;
@@ -24,7 +24,8 @@ public class CashUI : MonoBehaviour
 	
 	private void Update ()
     {
-        float fill = sessionInst.income / maxIncome;
+        float fill = sessionInst.totalIncome / maxIncome;
+        Debug.Log(fill);
         incomeProgressBar.fillAmount = fill;
         earnText.text = sessionInst.totalIncome.ToString("0.00") + " €";
         earnText.rectTransform.localPosition = new Vector3(incomePosX, fillBarBase + progressBarHeight * fill);

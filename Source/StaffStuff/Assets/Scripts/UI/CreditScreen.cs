@@ -14,7 +14,7 @@ public class CreditScreen : MonoBehaviour
     {
         if (curEntryPointer < creditEntries.Length)
         {
-            if ((curEntryPointer == 0 || lastSpawnedEntry.transform.localPosition.x >= 0))
+            if ((curEntryPointer == 0 || lastSpawnedEntry.transform.localPosition.x >= -660))
             {
                 SpawnNextCreditItem();
             }

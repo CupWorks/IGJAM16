@@ -41,6 +41,7 @@ public class GameSession : Singleton<GameSession>
 	public static GameState currentGameState = GameState.Intro;
 	private float currentSpawnTimer = 0.0f;
 	private float currentIncomeTimer = 0.0f;
+	private List<GameObject> creditPuppets = new List<GameObject>();
 
 	private void Start()
 	{
@@ -186,7 +187,7 @@ public class GameSession : Singleton<GameSession>
         return currentGameState == GameState.Running;
 	}
 
-	private void SpawnCreditPuppets()
+	public void SpawnCreditPuppets()
 	{
 		const float space = 1.75f;
 		var sprites = GetAllCharacterSprits();
@@ -194,9 +195,19 @@ public class GameSession : Singleton<GameSession>
 		foreach (var sprite in sprites)
 		{
 			var puppet = Instantiate(puppetPrefab, new Vector3(x, -2.0f, 0.0f), Quaternion.identity) as GameObject;
+			creditPuppets.Add(puppet);
 			puppet.GetComponent<SpriteRenderer>().sprite = sprite;
 			x += space;
 		}
+	}
+
+	public void DestroyCreditPuppets()
+	{
+		foreach (var puppet in creditPuppets)
+		{
+			Destroy(puppet);
+		}
+		creditPuppets.Clear();
 	}
 
 	private List<Sprite> GetAllCharacterSprits()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityRandom = UnityEngine.Random;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public delegate void GameEndEventHandler();
 
@@ -42,6 +43,7 @@ public class GameSession : Singleton<GameSession>
 	private float currentSpawnTimer = 0.0f;
 	private float currentIncomeTimer = 0.0f;
 	private List<GameObject> creditPuppets = new List<GameObject>();
+    private Button introButton;
 
 	private void Start()
 	{
@@ -52,7 +54,7 @@ public class GameSession : Singleton<GameSession>
 		SceneManager.LoadScene("HUD", LoadSceneMode.Additive);
         OnGameEnd += PauseSession;
 		if (currentGameState == GameState.Intro) {
-			ShowInto ();
+			ShowIntro ();
 		}
 	}
 
@@ -72,9 +74,13 @@ public class GameSession : Singleton<GameSession>
                 PauseSession();
                 MainMenu.Instance.ShowPauseMenu();
             }
-            else
+            else if (currentGameState == GameState.Pausemenu)
             {
                 MainMenu.Instance.UnpauseMenu();
+            }
+            else if (currentGameState == GameState.Intro)
+            {
+                introButton.onClick.Invoke();
             }
         }
     }
@@ -154,9 +160,10 @@ public class GameSession : Singleton<GameSession>
 		popularity += visitorDefinitions[(int)visitorType].popularityValue;
 	}
 
-	public void ShowInto()
+	public void ShowIntro()
 	{
-		Instantiate(introPrefab);
+		GameObject introGB = Instantiate(introPrefab);
+        introButton = introGB.GetComponentInChildren<Button>();
 	}
 
 	public void StartSession()

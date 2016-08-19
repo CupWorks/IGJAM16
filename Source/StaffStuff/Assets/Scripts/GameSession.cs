@@ -135,7 +135,6 @@ public class GameSession : Singleton<GameSession>
 		var goc = go.GetComponent<VisitorController>();
 		goc.visitorType = spawnType;
 		var spriteDefinitionIndex = UnityRandom.Range(0, visitorDefinitions[(int)spawnType].SpriteDefinitions.Length);
-		Debug.Log(spriteDefinitionIndex);
 		var spriteDefinition = visitorDefinitions[(int)spawnType].SpriteDefinitions[spriteDefinitionIndex];
 		goc.SetSpriteDefinition(spriteDefinition);
 	}

@@ -12,9 +12,9 @@ public class CreditScreen : MonoBehaviour
 
 	private void Update()
     {
-        if (curEntryPointer == 0 || lastSpawnedEntry.transform.localPosition.x >= 0)
+        if (curEntryPointer < creditEntries.Length)
         {
-            if (curEntryPointer < creditEntries.Length)
+            if ((curEntryPointer == 0 || lastSpawnedEntry.transform.localPosition.x >= 0))
             {
                 SpawnNextCreditItem();
             }

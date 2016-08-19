@@ -36,6 +36,7 @@ public class MainMenu : Singleton<MainMenu>
     public void ReturnFromCredits()
     {
         GameSession.currentGameState = GameState.Startmenu;
+		GameSession.Instance.DestroyCreditPuppets();
         gameObject.SetActive(true);
         creditScreen.SetActive(false);
     }
@@ -43,6 +44,7 @@ public class MainMenu : Singleton<MainMenu>
     public void ShowCredits()
     {
         GameSession.currentGameState = GameState.Credits;
+		GameSession.Instance.SpawnCreditPuppets();
         gameObject.SetActive(false);
         creditScreen.SetActive(true);
     }

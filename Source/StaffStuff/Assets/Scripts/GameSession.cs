@@ -125,15 +125,19 @@ public class GameSession : Singleton<GameSession>
 
 		var x = UnityRandom.Range(-20.0f, 20.0f);
 		var y = -8.0f;
-		if (x < -15.0f || x > 15.0f) {
-			UnityRandom.Range (-8.0f, -3.0f);
-			x = Math.Max (-16.0f, x);
-			x = Math.Min (16.0f, x);
+		if (x < -15.0f || x > 15.0f)
+		{
+			UnityRandom.Range(-8.0f, -3.0f);
+			x = Math.Max(-16.0f, x);
+			x = Math.Min(16.0f, x);
 		}
 		var go = Instantiate(visitorPrefab, new Vector3(x, y, 10.0f), new Quaternion()) as GameObject;
 		var goc = go.GetComponent<VisitorController>();
 		goc.visitorType = spawnType;
-		goc.SetSpriteDefinition(visitorDefinitions[(int)spawnType].SpriteDefinitions[0]);
+		var spriteDefinitionIndex = UnityRandom.Range(0, visitorDefinitions[(int)spawnType].SpriteDefinitions.Length);
+		Debug.Log(spriteDefinitionIndex);
+		var spriteDefinition = visitorDefinitions[(int)spawnType].SpriteDefinitions[spriteDefinitionIndex];
+		goc.SetSpriteDefinition(spriteDefinition);
 	}
 
 	public void DecreasePopularity(VisitorTypes visitorType)

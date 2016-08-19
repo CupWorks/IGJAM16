@@ -5,7 +5,8 @@ public class HighscoreDisplay : MonoBehaviour
 {
     private Highscore highscore;
     public GameObject highscoreEntryPrefab;
-    public float firstEntryHeight = 420;
+    public float firstEntryHeight = 350;
+    private float distBetweenEntries = 5;
 
     //Called by Inputfield.OnEndEdit from HighscoreEntryPrompt
     public void EnterHighscoreEntry(string entryName)
@@ -17,12 +18,13 @@ public class HighscoreDisplay : MonoBehaviour
 
     private void CreateEntryObjects()
     {
-        for (int i = 0; i < highscore.highscoreEntries.Count; i++)
+        int amountOfEntries = Mathf.Min(highscore.highscoreEntries.Count, 10);
+        for (int i = 0; i < amountOfEntries; i++)
         {
             GameObject score = Instantiate(highscoreEntryPrefab);
             score.transform.SetParent(this.transform);
             RectTransform rectTrans = score.GetComponent<RectTransform>();
-            rectTrans.localPosition = new Vector3(0, firstEntryHeight - rectTrans.rect.height * i, 0);
+            rectTrans.localPosition = new Vector3(0, firstEntryHeight - rectTrans.rect.height * i - distBetweenEntries * i, 0);
             rectTrans.localScale = Vector3.one;
             SetEntryValues(highscore.highscoreEntries[i], score);
         }

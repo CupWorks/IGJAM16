@@ -1,20 +1,17 @@
 fileFormatVersion: 2
-guid: 9afcbc8d8ba3a2346ad82cca76260d34
-timeCreated: 1471548871
+guid: 1d165ef7cd2d98b479659ad4bdef1e5f
+timeCreated: 1471597249
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: Neko_Sheet_0
-    21300002: Neko_Sheet_1
-    21300004: Neko_Sheet_2
-    21300006: Neko_Sheet_3
-    21300008: Neko_Sheet_1
-    21300010: Neko_Sheet_2
-    21300012: Neko_Sheet_3
+    21300000: NekoPool_Sheet_0
+    21300002: NekoPool_Sheet_1
+    21300004: NekoPool_Sheet_2
+    21300006: NekoPool_Sheet_3
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 0
+    enableMipMap: 1
     linearTexture: 0
     correctGamma: 0
     fadeOut: 0
@@ -60,25 +57,25 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Neko_Sheet_0
+      name: NekoPool_Sheet_0
       rect:
         serializedVersion: 2
-        x: 2
+        x: 3
         y: 13
         width: 142
         height: 227
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Neko_Sheet_1
+      name: NekoPool_Sheet_1
       rect:
         serializedVersion: 2
         x: 153
         y: 16
-        width: 106
+        width: 107
         height: 226
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -86,11 +83,11 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Neko_Sheet_2
+      name: NekoPool_Sheet_2
       rect:
         serializedVersion: 2
-        x: 273
-        y: 12
+        x: 268
+        y: 13
         width: 106
         height: 228
       alignment: 0
@@ -99,10 +96,10 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Neko_Sheet_3
+      name: NekoPool_Sheet_3
       rect:
         serializedVersion: 2
-        x: 382
+        x: 383
         y: 11
         width: 150
         height: 228
